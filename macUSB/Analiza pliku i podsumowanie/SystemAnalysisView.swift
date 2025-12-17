@@ -24,6 +24,8 @@ struct SystemAnalysisView: View {
     @State private var isRestoreLegacy: Bool = false
     // NOWOŚĆ: Flaga dla Cataliny
     @State private var isCatalina: Bool = false
+    @State private var isSierra: Bool = false
+    @State private var isUnsupportedSierra: Bool = false
     
     @State private var availableDrives: [USBDrive] = []
     @State private var selectedDrive: USBDrive?
@@ -131,7 +133,7 @@ struct SystemAnalysisView: View {
                                             Image(systemName: "xmark.circle.fill").font(.title2).foregroundColor(.red).frame(width: 32)
                                             VStack(alignment: .leading) {
                                                 Text("Błąd analizy").font(.caption).foregroundColor(.secondary)
-                                                Text("Nie znaleziono instalatora systemu macOS").font(.headline).foregroundColor(.red)
+                                                Text(isUnsupportedSierra ? String(localized: "Ta wersja systemu macOS Sierra nie jest wspierana przez aplikację. Potrzebna jest nowsza wersja instalatora.", comment: "Unsupported Sierra (not 12.6.06) message") : String(localized: "Wybrany system nie jest wspierany przez aplikację", comment: "Generic unsupported system message")).foregroundColor(.orange).font(.headline)
                                             }
                                         }
                                         .padding().frame(maxWidth: .infinity, alignment: .leading)
@@ -150,7 +152,7 @@ struct SystemAnalysisView: View {
                                             if showUnsupportedMessage {
                                                 HStack(alignment: .center) {
                                                     Image(systemName: "exclamationmark.triangle.fill").font(.title2).foregroundColor(.orange).frame(width: 32)
-                                                    Text("Wybrany system nie jest wspierany przez aplikację").foregroundColor(.orange).font(.headline)
+                                                    Text(isUnsupportedSierra ? String(localized: "Ta wersja systemu macOS Sierra nie jest wspierana przez aplikację. Potrzebna jest nowsza wersja instalatora.", comment: "Unsupported Sierra (not 12.6.06) message") : String(localized: "Wybrany system nie jest wspierany przez aplikację", comment: "Generic unsupported system message")).foregroundColor(.orange).font(.headline)
                                                 }
                                                 .padding().frame(maxWidth: .infinity, alignment: .leading)
                                                 .background(Color.orange.opacity(0.1)).cornerRadius(8).transition(.opacity)
@@ -197,6 +199,7 @@ struct SystemAnalysisView: View {
                             isRestoreLegacy: isRestoreLegacy,
                             // PRZEKAZANIE FLAGI CATALINA
                             isCatalina: isCatalina,
+                            isSierra: isSierra,
                             rootIsActive: $navigateToInstall,
                             isTabLocked: $isTabLocked
                         ),
@@ -336,6 +339,8 @@ struct SystemAnalysisView: View {
                     self.capacityCheckFinished = false
                     self.showUSBSection = false
                     self.showUnsupportedMessage = false
+                    self.isSierra = false
+                    self.isUnsupportedSierra = false
                 }
             }
         }
@@ -356,6 +361,8 @@ struct SystemAnalysisView: View {
                 capacityCheckFinished = false
                 showUSBSection = false
                 showUnsupportedMessage = false
+                isSierra = false
+                isUnsupportedSierra = false
             }
         }}
     }
@@ -365,6 +372,7 @@ struct SystemAnalysisView: View {
         withAnimation { isAnalyzing = true }
         selectedDrive = nil; capacityCheckFinished = false
         showUSBSection = false; showUnsupportedMessage = false
+        isUnsupportedSierra = false
         
         let ext = url.pathExtension.lowercased()
         if ext == "dmg" {
@@ -397,6 +405,11 @@ struct SystemAnalysisView: View {
                             
                             // Catalina detection
                             let isCatalina = nameLower.contains("catalina") || rawVer.starts(with: "10.15")
+                            
+                            // Sierra detection (supported only for installer version 12.6.06)
+                            let isSierra = (rawVer == "12.6.06")
+                            let isSierraName = nameLower.contains("sierra") && !nameLower.contains("high")
+                            let isUnsupportedSierraVersion = isSierraName && !isSierra
                             
                             // Modern (Big Sur+)
                             let isModern =
@@ -437,13 +450,19 @@ struct SystemAnalysisView: View {
                                 rawVer.starts(with: "10.7")
                             
                             // ZMIANA: Dodanie isCatalina do isSystemDetected
-                            self.isSystemDetected = isModern || isOldSupported || isLegacyDetected || isRestoreLegacy || isCatalina
+                            self.isSystemDetected = isModern || isOldSupported || isLegacyDetected || isRestoreLegacy || isCatalina || isSierra
                             
                             // Catalina ma swój własny codesign, więc tu wyłączamy standardowy 'needsCodesign'
                             self.needsCodesign = isOldSupported && !isModern && !isLegacyDetected
                             self.isLegacyDetected = isLegacyDetected
                             self.isRestoreLegacy = isRestoreLegacy
                             self.isCatalina = isCatalina
+                            self.isSierra = isSierra
+                            self.isUnsupportedSierra = isUnsupportedSierraVersion
+                            if isSierra {
+                                self.recognizedVersion = "macOS Sierra 10.12"
+                                self.needsCodesign = false
+                            }
                             
                             if self.isSystemDetected {
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { withAnimation(.spring(response: 0.7, dampingFraction: 0.8)) { self.showUSBSection = true } }
@@ -485,6 +504,11 @@ struct SystemAnalysisView: View {
                             // Catalina detection
                             let isCatalina = nameLower.contains("catalina") || rawVer.starts(with: "10.15")
                             
+                            // Sierra detection (supported only for installer version 12.6.06)
+                            let isSierra = (rawVer == "12.6.06")
+                            let isSierraName = nameLower.contains("sierra") && !nameLower.contains("high")
+                            let isUnsupportedSierraVersion = isSierraName && !isSierra
+                            
                             // Modern (Big Sur+)
                             let isModern =
                                 nameLower.contains("tahoe") || // Dodano Tahoe
@@ -523,12 +547,18 @@ struct SystemAnalysisView: View {
                                 rawVer.starts(with: "10.8") ||
                                 rawVer.starts(with: "10.7")
                             
-                            self.isSystemDetected = isModern || isOldSupported || isLegacyDetected || isRestoreLegacy || isCatalina
+                            self.isSystemDetected = isModern || isOldSupported || isLegacyDetected || isRestoreLegacy || isCatalina || isSierra
                             
                             self.needsCodesign = isOldSupported && !isModern && !isLegacyDetected
                             self.isLegacyDetected = isLegacyDetected
                             self.isRestoreLegacy = isRestoreLegacy
                             self.isCatalina = isCatalina
+                            self.isSierra = isSierra
+                            self.isUnsupportedSierra = isUnsupportedSierraVersion
+                            if isSierra {
+                                self.recognizedVersion = "macOS Sierra 10.12"
+                                self.needsCodesign = false
+                            }
                             
                             if self.isSystemDetected {
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { withAnimation(.spring(response: 0.7, dampingFraction: 0.8)) { self.showUSBSection = true } }
@@ -637,3 +667,4 @@ class AnalysisWindowHandler: NSObject, NSWindowDelegate {
     let onCleanup: () -> Void; init(onCleanup: @escaping () -> Void) { self.onCleanup = onCleanup }
     func windowShouldClose(_ sender: NSWindow) -> Bool { onCleanup(); return true }
 }
+

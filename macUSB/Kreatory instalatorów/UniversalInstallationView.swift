@@ -12,6 +12,7 @@ struct UniversalInstallationView: View {
     let isRestoreLegacy: Bool // Lion/Mountain Lion
     // Flaga Catalina
     let isCatalina: Bool
+    let isSierra: Bool
     
     @Binding var rootIsActive: Bool
     @Binding var isTabLocked: Bool
@@ -535,7 +536,7 @@ struct UniversalInstallationView: View {
         let isFromMountedVolume = sourceAppURL.path.hasPrefix("/Volumes/")
         self.log("Źródło instalatora: \(sourceAppURL.path)")
         self.log("Źródło z zamontowanego woluminu: \(isFromMountedVolume ? "TAK" : "NIE")")
-        self.log("Flagi: isCatalina=\(isCatalina), needsCodesign=\(needsCodesign), isLegacySystem=\(isLegacySystem), isRestoreLegacy=\(isRestoreLegacy)")
+        self.log("Flagi: isCatalina=\(isCatalina), isSierra=\(isSierra), needsCodesign=\(needsCodesign), isLegacySystem=\(isLegacySystem), isRestoreLegacy=\(isRestoreLegacy)")
         self.log("Folder TEMP: \(tempWorkURL.path)")
         
         DispatchQueue.global(qos: .userInitiated).async {
@@ -646,51 +647,103 @@ struct UniversalInstallationView: View {
                     self.log("ASR restore: source='\(targetESD.path)' target='\(usbPath)'")
                     
                 } else {
-                    // --- SEKCJA STANDARDOWA + CATALINA ---
                     // Ustal źródło: z /Volumes (DMG) czy lokalny .app
                     var effectiveAppURL = sourceAppURL
                     var didCopyToTemp = false
 
-                    if isFromMountedVolume || isCatalina || needsCodesign {
-                        self.log("Tryb standardowy: kopiowanie do TEMP (powód: \(isFromMountedVolume ? "DMG" : (isCatalina ? "Catalina" : "wymaga podpisu")))")
-                        // DMG lub przypadki wymagające modyfikacji: kopiujemy do TEMP
+                    if isSierra {
+                        // Tryb specjalny dla macOS Sierra: zawsze kopiujemy do TEMP i modyfikujemy
+                        self.log("Tryb Sierra: kopiowanie do TEMP i modyfikacje")
                         DispatchQueue.main.async {
                             self.processingTitle = String(localized: "Kopiowanie plików")
                             self.processingSubtitle = String(localized: "Trwa kopiowanie plików, proszę czekać.")
                         }
                         let destinationAppURL = tempWorkURL.appendingPathComponent(sourceAppURL.lastPathComponent)
                         if fileManager.fileExists(atPath: destinationAppURL.path) { try? fileManager.removeItem(at: destinationAppURL) }
-
-                        self.log("➡️ Rozpoczynam kopiowanie pliku .app do folderu TEMP...")
+                        self.log("➡️ Kopiowanie .app do TEMP (Sierra)")
                         self.log("   Źródło: \(sourceAppURL.path)")
                         self.log("   Cel: \(destinationAppURL.path)")
                         try fileManager.copyItem(at: sourceAppURL, to: destinationAppURL)
-                        self.log("✅ Kopiowanie do TEMP zakończone.")
+                        self.log("✅ Kopiowanie do TEMP zakończone (Sierra).")
 
                         effectiveAppURL = destinationAppURL
                         didCopyToTemp = true
 
-                        // Codesign w Swift (In-App) dla Cataliny oraz Mojave/High Sierra
-                        if isCatalina || needsCodesign {
-                            DispatchQueue.main.async {
-                                self.processingTitle = String(localized: "Modyfikowanie plików")
-                                self.processingSubtitle = String(localized: "Podpisywanie instalatora...")
-                            }
-                            try performLocalCodesign(on: destinationAppURL)
+                        // --- Modyfikacje pliku (B) ---
+                        DispatchQueue.main.async {
+                            self.processingTitle = String(localized: "Modyfikowanie plików")
+                            self.processingSubtitle = String(localized: "Aktualizacja wersji i podpisywanie...")
                         }
-                    } else {
-                        // Lokalny .app dla Modern (Big Sur+) oraz Legacy (Yosemite/El Capitan): pracujemy na oryginale
-                        effectiveAppURL = sourceAppURL
-                        self.log("Tryb standardowy: praca na oryginalnym .app bez kopiowania: \(effectiveAppURL.path)")
-                    }
 
+                        // 1) plutil: ustaw CFBundleShortVersionString na 12.6.03
+                        let plistPath = destinationAppURL.appendingPathComponent("Contents/Info.plist").path
+                        self.log("Sierra: plutil modyfikacja CFBundleShortVersionString -> 12.6.03 (\(plistPath))")
+                        let plutilTask = Process()
+                        plutilTask.launchPath = "/usr/bin/plutil"
+                        plutilTask.arguments = ["-replace", "CFBundleShortVersionString", "-string", "12.6.03", plistPath]
+                        try plutilTask.run()
+                        plutilTask.waitUntilExit()
+
+                        // 2) xattr: zdejmij kwarantannę z całej aplikacji
+                        self.log("Sierra: zdejmowanie kwarantanny (xattr) z \(destinationAppURL.path)")
+                        let xattrTask2 = Process()
+                        xattrTask2.launchPath = "/usr/bin/xattr"
+                        xattrTask2.arguments = ["-dr", "com.apple.quarantine", destinationAppURL.path]
+                        try xattrTask2.run()
+                        xattrTask2.waitUntilExit()
+
+                        // 3) codesign: podpisz createinstallmedia w (B)
+                        let cimPath = destinationAppURL.appendingPathComponent("Contents/Resources/createinstallmedia").path
+                        self.log("Sierra: podpisywanie createinstallmedia (\(cimPath))")
+                        let csTask2 = Process()
+                        csTask2.launchPath = "/usr/bin/codesign"
+                        csTask2.arguments = ["-s", "-", "-f", cimPath]
+                        try csTask2.run()
+                        csTask2.waitUntilExit()
+
+                    } else {
+                        if isFromMountedVolume || isCatalina || needsCodesign {
+                            self.log("Tryb standardowy: kopiowanie do TEMP (powód: \(isFromMountedVolume ? "DMG" : (isCatalina ? "Catalina" : "wymaga podpisu")))")
+                            // DMG lub przypadki wymagające modyfikacji: kopiujemy do TEMP
+                            DispatchQueue.main.async {
+                                self.processingTitle = String(localized: "Kopiowanie plików")
+                                self.processingSubtitle = String(localized: "Trwa kopiowanie plików, proszę czekać.")
+                            }
+                            let destinationAppURL = tempWorkURL.appendingPathComponent(sourceAppURL.lastPathComponent)
+                            if fileManager.fileExists(atPath: destinationAppURL.path) { try? fileManager.removeItem(at: destinationAppURL) }
+
+                            self.log("➡️ Rozpoczynam kopiowanie pliku .app do folderu TEMP...")
+                            self.log("   Źródło: \(sourceAppURL.path)")
+                            self.log("   Cel: \(destinationAppURL.path)")
+                            try fileManager.copyItem(at: sourceAppURL, to: destinationAppURL)
+                            self.log("✅ Kopiowanie do TEMP zakończone.")
+
+                            effectiveAppURL = destinationAppURL
+                            didCopyToTemp = true
+
+                            // Codesign w Swift (In-App) dla Cataliny oraz Mojave/High Sierra
+                            if isCatalina || needsCodesign {
+                                DispatchQueue.main.async {
+                                    self.processingTitle = String(localized: "Modyfikowanie plików")
+                                    self.processingSubtitle = String(localized: "Podpisywanie instalatora...")
+                                }
+                                try performLocalCodesign(on: destinationAppURL)
+                            }
+                        } else {
+                            // Lokalny .app dla Modern (Big Sur+) oraz Legacy (Yosemite/El Capitan): pracujemy na oryginale
+                            effectiveAppURL = sourceAppURL
+                            self.log("Tryb standardowy: praca na oryginalnym .app bez kopiowania: \(effectiveAppURL.path)")
+                        }
+                    }
+                    
+                    // Dla Legacy (Yosemite/El Capitan) oraz Sierra: dodaj --applicationpath do efektywnego źródła
+                    var legacyArg = isLegacySystem ? "--applicationpath '\(effectiveAppURL.path)'" : ""
+                    if isSierra { legacyArg = "--applicationpath '\(effectiveAppURL.path)'" }
+                    if !legacyArg.isEmpty { self.log("Dodano argument legacy: \(legacyArg)") } else { self.log("Bez argumentu --applicationpath (nieniezbędny)") }
+                    
                     // Ścieżka do createinstallmedia na efektywnym źródle
                     let createInstallMediaURL = effectiveAppURL.appendingPathComponent("Contents/Resources/createinstallmedia")
                     self.log("createinstallmedia: \(createInstallMediaURL.path)")
-
-                    // Dla Legacy (Yosemite/El Capitan): dodaj --applicationpath do efektywnego źródła
-                    let legacyArg = isLegacySystem ? "--applicationpath '\(effectiveAppURL.path)'" : ""
-                    if !legacyArg.isEmpty { self.log("Dodano argument legacy: \(legacyArg)") } else { self.log("Bez argumentu --applicationpath (nieniezbędny)") }
                     
                     var bashLogic = """
                     sudo '\(createInstallMediaURL.path)' --volume '\(usbPath)' \(legacyArg) --nointeraction

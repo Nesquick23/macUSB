@@ -83,7 +83,7 @@ The table below shows systems that have successfully passed tests for creating a
 | **macOS Catalina** | 10.15 | ✅ |
 | **macOS Mojave** | 10.14 | ✅ |
 | **macOS High Sierra** | 10.13 | ✅ |
-| **macOS Sierra** | 10.12 | ❌ |
+| **macOS Sierra** | 10.12 | ✅ |
 | **OS X El Capitan** | 10.11 | ✅ |
 | **OS X Yosemite** | 10.10 | ✅ |
 | **OS X Mavericks** | 10.9 | ❌ |
@@ -94,12 +94,12 @@ The table below shows systems that have successfully passed tests for creating a
 
 ## 🐛 Known Issues and Limitations
 
-During testing, compatibility issues were identified with certain system versions on Apple Silicon architecture. To ensure the stability of your computer and avoid critical errors, **the application intentionally blocks the selection of the following systems**:
+During testing, compatibility issues were identified with certain system versions on Apple Silicon architecture. To ensure the **proper functioning of the application and the system**, macUSB intentionally restricts the selection of the following versions:
 
-* **macOS Sierra (10.12):** The USB creation process fails, causing a rapid RAM fill-up and severe system stuttering.
+* **macOS Sierra (10.12):** Support is available **exclusively for version 10.12.6** (the latest available update). Other releases of Sierra are restricted as they may cause issues and complications regarding the application's performance and system stability.
 * **OS X Mavericks (10.9):** The installer file is incorrectly verified by the system as "damaged," preventing the procedure from starting.
 
-If a **`.dmg`** image or a **`.app`** installer with one of the above systems is selected, macUSB will display an unsupported message and will not allow you to proceed to the next step.
+If a **`.dmg`** image or a **`.app`** installer with Mavericks (or Sierra older than 10.12.6) is selected, macUSB will display an unsupported message and will not allow you to proceed to the next step.
 
 ---
 
