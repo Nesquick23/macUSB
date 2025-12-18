@@ -83,7 +83,7 @@ The table below shows systems that have successfully passed tests for creating a
 | **macOS Catalina** | 10.15 | ✅ |
 | **macOS Mojave** | 10.14 | ✅ |
 | **macOS High Sierra** | 10.13 | ✅ |
-| **macOS Sierra** | 10.12 | ⚠️ (only 10.12.6) |
+| **macOS Sierra** | 10.12 | ✅ (only 10.12.6) |
 | **OS X El Capitan** | 10.11 | ✅ |
 | **OS X Yosemite** | 10.10 | ✅ |
 | **OS X Mavericks** | 10.9 | ❌ |
